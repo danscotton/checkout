@@ -1,5 +1,3 @@
-require 'item'
-
 describe Item do
   subject { Item.new(product_code: "DA1", name: "Fruit Tea", price: 5.00) }
 

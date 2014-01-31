@@ -1,5 +1,3 @@
-require 'checkout'
-
 describe Checkout do
   it "has a total of 0 when it contains no items" do
     checkout = Checkout.new
@@ -13,5 +11,16 @@ describe Checkout do
     checkout.scan(double(price: 3.50))
     expect(checkout.total).to eq 7
   end
-end
 
+  it "can take a pricing rule which gets passed the array of items on total" do
+    rule = double(:rule)
+    item_a, item_b = double(:item, price: 1), double(:item, price: 2)
+    items = [item_a, item_b]
+    expect(rule).to receive(:apply).with(items).and_return(items)
+
+    checkout = Checkout.new([rule])
+    checkout.scan(item_a)
+    checkout.scan(item_b)
+    checkout.total
+  end
+end

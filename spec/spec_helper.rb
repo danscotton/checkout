@@ -5,6 +5,11 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'helpers/product'
+require 'checkout'
+require 'item'
+require 'pricing_rule'
+require 'buy_one_get_one_free'
+require 'multiple_discount'
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
