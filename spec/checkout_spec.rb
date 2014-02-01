@@ -12,13 +12,13 @@ describe Checkout do
     expect(checkout.total).to eq 7
   end
 
-  it "can take a pricing rule which gets passed the array of items on total" do
+  it "can take a pricing rules object which gets passed the array of items on total" do
     rule = double(:rule)
     item_a, item_b = double(:item, price: 1), double(:item, price: 2)
     items = [item_a, item_b]
     expect(rule).to receive(:apply).with(items).and_return(items)
 
-    checkout = Checkout.new([rule])
+    checkout = Checkout.new(rule)
     checkout.scan(item_a)
     checkout.scan(item_b)
     checkout.total

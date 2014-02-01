@@ -2,28 +2,35 @@
 
 describe "Adding items to the checkout" do
   it "can calculate the total of multiple items" do
-    co = Checkout.new(PricingRule.for("FR1", BuyOneGetOneFree))
+    co = Checkout.new(pricing_rules)
     co.scan(fruit_tea)
     co.scan(fruit_tea)
     co.scan(strawberries)
     co.scan(fruit_tea)
     co.scan(coffee)
-    expect(co.total).to eq 22.45
+    expect(co.total).to match_price 22.45
   end
 
-  it "can process BOGOF pricing rules" do
-    co = Checkout.new(PricingRule.for("FR1", BuyOneGetOneFree))
+  it "can process BOGOF offers" do
+    co = Checkout.new(pricing_rules)
     co.scan(fruit_tea)
     co.scan(fruit_tea)
-    expect(co.total).to eq 3.11
+    expect(co.total).to match_price 3.11
   end
 
-  it "can process multiple discount pricing rules" do
-    co = Checkout.new(PricingRule.for("SR1", MultipleDiscount.by(0.1).minimum_of(3)))
+  it "can process multibuy offers" do
+    co = Checkout.new(pricing_rules)
     co.scan(strawberries)
     co.scan(strawberries)
     co.scan(fruit_tea)
     co.scan(strawberries)
-    expect(co.total).to eq 16.61
+    expect(co.total).to match_price 16.61
+  end
+
+  def pricing_rules
+    PricingRules.new do
+      add "FR1", BuyOneGetOneFreeOffer
+      add "SR1", MultiBuyOffer, discount: 0.1, minimum_items: 3
+    end
   end
 end

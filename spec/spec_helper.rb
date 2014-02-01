@@ -7,9 +7,16 @@
 require 'helpers/product'
 require 'checkout'
 require 'item'
-require 'pricing_rule'
-require 'buy_one_get_one_free'
-require 'multiple_discount'
+require 'pricing_rules'
+require 'offer'
+require 'buy_one_get_one_free_offer'
+require 'multibuy_offer'
+
+RSpec::Matchers.define :match_price do |expected|
+  match do |actual|
+    expect(actual).to be_within(0.001).of(expected)
+  end
+end
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true

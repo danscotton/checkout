@@ -1,7 +1,7 @@
 class Checkout
-  def initialize(rules = [])
+  def initialize(rules = NoPricingRules)
     @items = []
-    @rules = [rules].flatten
+    @rules = rules
   end
 
   def scan(item)
@@ -9,14 +9,18 @@ class Checkout
   end
 
   def total
-    process_pricing_rules.inject(0) { |total, item| total + item.price }
+    x = rules.apply(items)
+    # x.each {|i| puts "#{i.product_code} \t #{i.price}"}
+    x.inject(0) { |total, item| total + item.price }
   end
 
   private
 
   attr_reader :items, :rules
 
-  def process_pricing_rules
-    rules.inject(items) {|items, rule| rule.apply(items) }
+  class NoPricingRules
+    def self.apply(items)
+      items
+    end
   end
 end
