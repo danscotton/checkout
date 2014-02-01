@@ -35,26 +35,3 @@ class PricingRules
     end
   end
 end
-# class PricingRule
-#   def self.for(product_code, offer)
-#     new(product_code, offer)
-#   end
-
-#   def initialize(product_code, offer)
-#     @product_code, @offer = product_code, offer
-#   end
-
-#   def apply(items)
-#     matches, non_matches = items.partition {|item| item.product_code == product_code }
-#     process(matches) + non_matches
-#   end
-
-#   private
-
-#   attr_reader :product_code, :offer
-
-#   def process(matched_items)
-#     matched_items.empty? ? matched_items : [offer.apply(matched_items)]
-#   end
-# end
-

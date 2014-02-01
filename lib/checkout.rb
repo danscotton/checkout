@@ -10,7 +10,6 @@ class Checkout
 
   def total
     x = rules.apply(items)
-    # x.each {|i| puts "#{i.product_code} \t #{i.price}"}
     x.inject(0) { |total, item| total + item.price }
   end
 
