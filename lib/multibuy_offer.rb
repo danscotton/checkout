@@ -12,18 +12,18 @@ class MultiBuyOffer < Offer
   end
 
   def price
-    if apply_offer?
-      items.inject(0) do |total, item|
-        total - (item.price * discount)
-      end
-    else
-      0
-    end
+    offer_applies? ? calculate_offer : 0
   end
 
   private
 
-  def apply_offer?
+  def offer_applies?
     items.count >= minimum_items
+  end
+
+  def calculate_offer
+    items.inject(0) do |subtotal, item|
+      subtotal - (item.price * discount)
+    end
   end
 end

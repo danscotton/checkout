@@ -2,8 +2,7 @@ class Offer
   attr_reader :items
 
   def initialize(items = [], options = {})
-    @items = items
-    @options = options
+    @items, @options = items, options
   end
 
   def price

@@ -1,7 +1,6 @@
 class Checkout
   def initialize(rules = NoPricingRules)
-    @items = []
-    @rules = rules
+    @items, @rules = [], rules
   end
 
   def scan(item)
@@ -9,8 +8,7 @@ class Checkout
   end
 
   def total
-    x = rules.apply(items)
-    x.inject(0) { |total, item| total + item.price }
+    rules.apply(items).inject(0) { |subtotal, item| subtotal + item.price }
   end
 
   private
