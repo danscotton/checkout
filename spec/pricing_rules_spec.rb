@@ -35,7 +35,7 @@ describe PricingRules do
     describe "that does match an item" do
       it "creates an instance of the offer with the matched items" do
         my_offer = double(:my_offer_class)
-        expect(my_offer).to receive(:new).with([item_a]).and_return([item_a])
+        expect(my_offer).to receive(:new).with([item_a], {})
 
         rules = PricingRules.new { add "A", my_offer }
         rules.apply(items)
@@ -43,7 +43,7 @@ describe PricingRules do
 
       it "returns an array of the original items along with the offer instance" do
         my_offer = double(:my_offer_class)
-        allow(my_offer).to receive(:new).with([item_a]).and_return([my_offer])
+        allow(my_offer).to receive(:new).with([item_a], {}).and_return(my_offer)
 
         rules = PricingRules.new { add "A", my_offer }
         expect(rules.apply(items)).to match_array [item_a, item_b, my_offer]
